@@ -22,6 +22,7 @@ servers.with_index { |line, n|
 
     #print "Resolving #{hostname} ..."
     addresses = Resolv.getaddresses(hostname)
+    #addresses = []
     addresses.map! { |a|
         IPAddr.new(a).to_i
     }
@@ -44,6 +45,12 @@ recommended = {
         ca: ca,
         # XXX: hardcoded, can be parsed from .ovpn
         ep: [
+            "UDP:1194",
+            "UDP:1195",
+            "UDP:1196",
+            "UDP:1197",
+            "UDP:1301",
+            "UDP:1302",
             "UDP:53",
             "TCP:443",
             "TCP:80"
