@@ -5,16 +5,21 @@ require "ipaddr"
 cwd = File.dirname(__FILE__)
 Dir.chdir(cwd)
 
+servers = File.foreach("../template/servers.csv")
+
 ca = File.read("../certs/ca.pem")
-countries = ["US", "FR", "DE", "ES", "IT"]
 bogus_ip = 16909060
 
 ###
 
 pools = []
-countries.each { |k|
-    id = k.downcase
-    hostname = "#{id}.sample-vpn-provider.bogus"
+ep = []
+servers.with_index { |line, n|
+    country, hostname, udp_joined, tcp_joined = line.strip.split(",")
+
+    # XXX: can't use per-server ports, endpoints must be shared
+    #udp = udp_joined.split("-")
+    #tcp = tcp_joined.split("-")
 
     #print "Resolving #{hostname} ..."
     #addresses = Resolv.getaddresses(hostname)
@@ -29,11 +34,11 @@ countries.each { |k|
     }
 
     pool = {
-        :id => id,
-        :name => "Sample #{k}",
-        :country => k,
+        :id => country,
+        :name => "", # FIXME: localize in app?
+        :country => country,
         :hostname => hostname,
-        :addrs => addresses
+        #:addrs => addresses
     }
     pools << pool
 }
@@ -43,14 +48,16 @@ recommended = {
     name: "Recommended",
     comment: "128-bit encryption",
     cfg: {
-        ep: [
-            "UDP:1194",
-            "TCP:443",
-        ],
-        cipher: "AES-128-GCM",
-        auth: "SHA1",
         ca: ca,
-        frame: 1,
+        # XXX: hardcoded, can be parsed from .ovpn
+        ep: [
+            "UDP:53",
+            "TCP:443",
+            "TCP:80"
+        ],
+        cipher: "AES-256-CBC",
+        auth: "SHA1",
+        frame: 0,
         ping: 60,
         reneg: 3600
     }
@@ -58,7 +65,7 @@ recommended = {
 presets = [recommended]
 
 defaults = {
-    :username => "myusername",
+    :username => "1234567890",
     :pool => "us",
     :preset => "recommended"
 }
