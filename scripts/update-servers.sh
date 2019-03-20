@@ -22,7 +22,7 @@ for CFG in `ls tmp/*.ovpn`; do
     COUNTRY=`echo $ID | sed -E "s/^([^\-]+)-.*$/\1/"`
     HOST=$ID.mullvad.net
     UDP_PORT=`grep -E "^remote " $CFG | sed -E "s/^.* ([0-9]+)$/\1/"`
-    echo $COUNTRY,$HOST,$UDP_PORT-$UDP_OTHER_PORTS,$TCP_PORTS >>$SERVERS
+    echo $ID,$COUNTRY,$HOST,$UDP_PORT-$UDP_OTHER_PORTS,$TCP_PORTS >>$SERVERS
 done
 
 #rm -rf tmp

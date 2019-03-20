@@ -14,7 +14,7 @@ ca = File.read("../certs/ca.pem")
 pools = []
 ep = []
 servers.with_index { |line, n|
-    country, hostname, udp_joined, tcp_joined = line.strip.split(",")
+    id, country, hostname, udp_joined, tcp_joined = line.strip.split(",")
 
     # XXX: can't use per-server ports, endpoints must be shared
     #udp = udp_joined.split("-")
@@ -27,8 +27,8 @@ servers.with_index { |line, n|
     }
 
     pool = {
-        :id => country,
-        :name => "", # FIXME: localize in app?
+        :id => id,
+        :name => id, # FIXME: localize in app via country
         :country => country,
         :hostname => hostname,
         :addrs => addresses
