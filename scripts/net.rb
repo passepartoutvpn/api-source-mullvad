@@ -8,7 +8,6 @@ Dir.chdir(cwd)
 servers = File.foreach("../template/servers.csv")
 
 ca = File.read("../certs/ca.pem")
-bogus_ip = 16909060
 
 ###
 
@@ -22,15 +21,9 @@ servers.with_index { |line, n|
     #tcp = tcp_joined.split("-")
 
     #print "Resolving #{hostname} ..."
-    #addresses = Resolv.getaddresses(hostname)
-
-    addresses = []
-    3.times {
-        addresses << bogus_ip
-        bogus_ip += 1
-    }
+    addresses = Resolv.getaddresses(hostname)
     addresses.map! { |a|
-        IPAddr.new(a, Socket::AF_INET)
+        IPAddr.new(a).to_i
     }
 
     pool = {
@@ -38,7 +31,7 @@ servers.with_index { |line, n|
         :name => "", # FIXME: localize in app?
         :country => country,
         :hostname => hostname,
-        #:addrs => addresses
+        :addrs => addresses
     }
     pools << pool
 }
