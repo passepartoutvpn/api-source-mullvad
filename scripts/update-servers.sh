@@ -16,13 +16,15 @@ TCP_PORTS="80-443"
 mkdir certs
 grep -A$LINES $CA_BEGIN $SAMPLE_CFG | grep -B$LINES $CA_END | egrep -v "$CA_BEGIN|$CA_END" >$CA
 
-rm $SERVERS
+rm -f $SERVERS
 for CFG in `ls tmp/*.ovpn`; do
     ID=`echo $CFG | sed -E "s/^tmp\/mullvad_([a-z\-]+).ovpn$/\1/"`
-    COUNTRY=`echo $ID | sed -E "s/^([^\-]+)-.*$/\1/"`
+    ID_COMPS=(${ID//-/ })
+    COUNTRY=${ID_COMPS[0]}
+    AREA=${ID_COMPS[1]}
     HOST=$ID.mullvad.net
     UDP_PORT=`grep -E "^remote " $CFG | sed -E "s/^.* ([0-9]+)$/\1/"`
-    echo $ID,$COUNTRY,$HOST,$UDP_PORT-$UDP_OTHER_PORTS,$TCP_PORTS >>$SERVERS
+    echo $ID,$COUNTRY,$AREA,$HOST,$UDP_PORT-$UDP_OTHER_PORTS,$TCP_PORTS >>$SERVERS
 done
 
 #rm -rf tmp
