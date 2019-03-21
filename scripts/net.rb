@@ -20,9 +20,12 @@ servers.with_index { |line, n|
     #udp = udp_joined.split("-")
     #tcp = tcp_joined.split("-")
 
-    #print "Resolving #{hostname} ..."
-    addresses = Resolv.getaddresses(hostname)
-    #addresses = []
+    addresses = nil
+    if ARGV.length > 0 && ARGV[0] == "noresolv"
+        addresses = []
+    else
+        addresses = Resolv.getaddresses(hostname)
+    end
     addresses.map! { |a|
         IPAddr.new(a).to_i
     }
