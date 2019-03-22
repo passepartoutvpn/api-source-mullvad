@@ -21,7 +21,7 @@ grep -A$LINES $CA_BEGIN $SAMPLE_CFG | grep -B$LINES $CA_END | egrep -v "$CA_BEGI
 rm -f $SERVERS
 for CFG in `ls tmp/*.ovpn`; do
     ID=`echo $CFG | sed -E "s/^tmp\/mullvad_([a-z\-]+).ovpn$/\1/"`
-    ID_COMPS=${ID//-/ }
+    ID_COMPS=(${ID//-/ })
     COUNTRY=${ID_COMPS[0]}
     AREA=${ID_COMPS[1]}
     HOST=$ID.mullvad.net
