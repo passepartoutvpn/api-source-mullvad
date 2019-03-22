@@ -12,6 +12,8 @@ TCP_PORTS="80-443"
 #curl -L "https://mullvad.net/en/download/config/" >template/src.zip
 rm -rf tmp
 unzip template/src.zip -d tmp
+mv tmp/mullvad_config_ios_all/* tmp
+rmdir tmp/mullvad_config_ios_all
 
 mkdir certs
 grep -A$LINES $CA_BEGIN $SAMPLE_CFG | grep -B$LINES $CA_END | egrep -v "$CA_BEGIN|$CA_END" >$CA
