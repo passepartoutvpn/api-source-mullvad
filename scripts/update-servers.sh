@@ -10,8 +10,8 @@ TCP_PORTS="80-443"
 
 #mkdir template
 #curl -L "https://mullvad.net/en/download/config/" >template/src.zip
-#rm -rf tmp
-#unzip template/src.zip -d tmp
+rm -rf tmp
+unzip template/src.zip -d tmp
 
 mkdir certs
 grep -A$LINES $CA_BEGIN $SAMPLE_CFG | grep -B$LINES $CA_END | egrep -v "$CA_BEGIN|$CA_END" >$CA
@@ -27,4 +27,4 @@ for CFG in `ls tmp/*.ovpn`; do
     echo $ID,$COUNTRY,$AREA,$HOST,$UDP_PORT-$UDP_OTHER_PORTS,$TCP_PORTS >>$SERVERS
 done
 
-#rm -rf tmp
+rm -rf tmp
