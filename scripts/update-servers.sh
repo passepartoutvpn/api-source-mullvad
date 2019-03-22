@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SAMPLE_CFG="tmp/mullvad_at.ovpn"
 CA="certs/ca.pem"
 SERVERS="template/servers.csv"
