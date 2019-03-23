@@ -1,4 +1,5 @@
 #!/bin/bash
+URL="https://mullvad.net/en/download/config/" # not stateless
 SAMPLE_CFG="tmp/mullvad_at.ovpn"
 CA="certs/ca.pem"
 SERVERS="template/servers.csv"
@@ -9,7 +10,7 @@ UDP_OTHER_PORTS="53"
 TCP_PORTS="80-443"
 
 #mkdir -p template
-#curl -L "https://mullvad.net/en/download/config/" >template/src.zip
+#curl -L $URL >template/src.zip
 rm -rf tmp
 unzip template/src.zip -d tmp
 mv tmp/mullvad_config_ios_all/* tmp
