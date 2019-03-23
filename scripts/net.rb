@@ -44,7 +44,7 @@ servers.with_index { |line, n|
 recommended = {
     id: "recommended",
     name: "Recommended",
-    comment: "128-bit encryption",
+    comment: "256-bit encryption",
     cfg: {
         ca: ca,
         # XXX: hardcoded, can be parsed from .ovpn
