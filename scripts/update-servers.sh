@@ -1,7 +1,7 @@
 #!/bin/bash
 URL="https://mullvad.net/en/download/config/" # not stateless
 SAMPLE_CFG="tmp/mullvad_at.ovpn"
-CA="certs/ca.pem"
+CA="certs/ca.crt"
 SERVERS="template/servers.csv"
 LINES=100000
 CA_BEGIN="<ca>"

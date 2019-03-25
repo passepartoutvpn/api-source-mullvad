@@ -7,12 +7,11 @@ Dir.chdir(cwd)
 
 servers = File.foreach("../template/servers.csv")
 
-ca = File.read("../certs/ca.pem")
+ca = File.read("../certs/ca.crt")
 
 ###
 
 pools = []
-ep = []
 servers.with_index { |line, n|
     id, country, area, hostname, udp_joined, tcp_joined = line.strip.split(",")
 
@@ -63,7 +62,8 @@ recommended = {
         auth: "SHA1",
         frame: 0,
         ping: 60,
-        reneg: 3600
+        reneg: 3600,
+        eku: true
     }
 }
 presets = [recommended]
