@@ -27,12 +27,12 @@ rmdir $TMP/mullvad_config_ios_all
 grep -A$LINES $CA_BEGIN $SAMPLE_CFG | grep -B$LINES $CA_END | egrep -v "$CA_BEGIN|$CA_END" >$CA
 
 rm -f $SERVERS_DST
-for CFG in `ls $TMP/*.ovpn`; do
-    ID=`echo $CFG | sed -E "s/^$TMP\/mullvad_([a-z\-]+)\.ovpn$/\1/"`
+for CFG in `cd $TMP && ls *.ovpn`; do
+    ID=`echo $CFG | sed -E "s/^mullvad_([a-z\-]+)\.ovpn$/\1/"`
     ID_COMPS=(${ID//-/ })
     COUNTRY=${ID_COMPS[0]}
     AREA=${ID_COMPS[1]}
     HOST=$ID.mullvad.net
-    UDP_PORT=`grep -E "^remote " $CFG | sed -E "s/^.* ([0-9]+)$/\1/"`
+    UDP_PORT=`grep -E "^remote " $TMP/$CFG | sed -E "s/^.* ([0-9]+)$/\1/"`
     echo $ID,$COUNTRY,$AREA,$HOST,$UDP_PORT-$UDP_OTHER_PORTS,$TCP_PORTS >>$SERVERS_DST
 done
