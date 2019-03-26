@@ -6,6 +6,7 @@ SERVERS_SRC="$TPL/servers.zip"
 SERVERS_DST="$TPL/servers.csv"
 SAMPLE_CFG="$TMP/mullvad_at.ovpn"
 CA="$TPL/ca.crt"
+
 LINES=100000
 CA_BEGIN="<ca>"
 CA_END="</ca>"
