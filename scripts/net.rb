@@ -5,9 +5,45 @@ require "ipaddr"
 cwd = File.dirname(__FILE__)
 Dir.chdir(cwd)
 
-servers = File.foreach("../template/servers.csv")
+###
 
-ca = File.read("../certs/ca.crt")
+servers = File.foreach("../template/servers.csv")
+ca = File.read("../template/ca.crt")
+
+cfg = {
+    ca: ca,
+    ep: [
+        "UDP:1194",
+        "UDP:1195",
+        "UDP:1196",
+        "UDP:1197",
+        "UDP:1301",
+        "UDP:1302",
+        "UDP:53",
+        "TCP:443",
+        "TCP:80"
+    ],
+    cipher: "AES-256-CBC",
+    auth: "SHA1",
+    frame: 0,
+    ping: 60,
+    reneg: 3600,
+    eku: true
+}
+
+recommended = {
+    id: "default",
+    name: "Default",
+    comment: "256-bit encryption",
+    cfg: cfg
+}
+presets = [recommended]
+
+defaults = {
+    :username => "1234567890",
+    :pool => "us",
+    :preset => "default"
+}
 
 ###
 
@@ -38,40 +74,6 @@ servers.with_index { |line, n|
     }
     pool[:area] = area if !area.empty?
     pools << pool
-}
-
-recommended = {
-    id: "recommended",
-    name: "Recommended",
-    comment: "256-bit encryption",
-    cfg: {
-        ca: ca,
-        # XXX: hardcoded, can be parsed from .ovpn
-        ep: [
-            "UDP:1194",
-            "UDP:1195",
-            "UDP:1196",
-            "UDP:1197",
-            "UDP:1301",
-            "UDP:1302",
-            "UDP:53",
-            "TCP:443",
-            "TCP:80"
-        ],
-        cipher: "AES-256-CBC",
-        auth: "SHA1",
-        frame: 0,
-        ping: 60,
-        reneg: 3600,
-        eku: true
-    }
-}
-presets = [recommended]
-
-defaults = {
-    :username => "1234567890",
-    :pool => "us",
-    :preset => "recommended"
 }
 
 ###
