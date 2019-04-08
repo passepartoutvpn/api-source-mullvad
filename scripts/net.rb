@@ -26,7 +26,7 @@ cfg = {
     cipher: "AES-256-CBC",
     auth: "SHA1",
     frame: 0,
-    ping: 60,
+    ping: 10,
     reneg: 3600,
     eku: true
 }
