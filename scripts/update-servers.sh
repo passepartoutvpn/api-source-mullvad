@@ -19,7 +19,11 @@ echo "WARNING: Profiles must be updated manually!"
 echo
 
 mkdir -p $TPL
-#curl -L $URL >$SERVERS_SRC
+#if ! curl -L $URL >$SERVERS_SRC.tmp; then
+#    exit
+#fi
+#mv $SERVERS_SRC.tmp $SERVERS_SRC
+
 rm -rf $TMP
 unzip $SERVERS_SRC -d $TMP
 mv $TMP/mullvad_config_ios_all/* $TMP
