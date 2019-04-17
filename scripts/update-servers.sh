@@ -1,8 +1,9 @@
 #!/bin/bash
 URL="https://mullvad.net/en/download/config/" # not stateless
 TPL="template"
+STATIC="static"
 TMP="tmp"
-SERVERS_SRC="$TPL/servers.zip"
+SERVERS_SRC="$STATIC/servers.zip"
 SERVERS_DST="$TPL/servers.csv"
 SAMPLE_CFG="$TMP/mullvad_at.ovpn"
 CA="$TPL/ca.crt"
