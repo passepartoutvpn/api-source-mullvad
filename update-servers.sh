@@ -1,8 +1,9 @@
 #!/bin/bash
 URL="https://mullvad.net/en/download/config/" # not stateless
 TPL="template"
+STATIC="static"
 TMP="tmp"
-SERVERS_SRC="$TPL/servers.zip"
+SERVERS_SRC="$STATIC/servers.zip"
 SERVERS_DST="$TPL/servers.csv"
 SAMPLE_CFG="$TMP/mullvad_at.ovpn"
 CA="$TPL/ca.crt"
@@ -18,7 +19,11 @@ echo "WARNING: Profiles must be updated manually!"
 echo
 
 mkdir -p $TPL
-#curl -L $URL >$SERVERS_SRC
+#if ! curl -L $URL >$SERVERS_SRC.tmp; then
+#    exit
+#fi
+#mv $SERVERS_SRC.tmp $SERVERS_SRC
+
 rm -rf $TMP
 unzip $SERVERS_SRC -d $TMP
 mv $TMP/mullvad_config_ios_all/* $TMP
