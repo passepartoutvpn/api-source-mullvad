@@ -8,7 +8,7 @@ Dir.chdir(cwd)
 ###
 
 servers = File.foreach("../template/servers.csv")
-ca = File.read("../template/ca.crt")
+ca = File.read("../static/ca.crt")
 
 cfg = {
     ca: ca,
