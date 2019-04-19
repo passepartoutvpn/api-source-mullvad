@@ -56,7 +56,7 @@ servers.with_index { |line, n|
     #tcp = tcp_joined.split("-")
 
     addresses = nil
-    if ARGV.length > 0 && ARGV[0] == "noresolv"
+    if ARGV.include? "noresolv"
         addresses = []
     else
         addresses = Resolv.getaddresses(hostname)
