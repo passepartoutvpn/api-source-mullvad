@@ -31,11 +31,16 @@ cfg = {
     eku: true
 }
 
+external = {
+    hostname: "${id}.mullvad.net"
+}
+
 recommended = {
     id: "default",
     name: "Default",
     comment: "256-bit encryption",
-    cfg: cfg
+    cfg: cfg,
+    external: external
 }
 presets = [recommended]
 
