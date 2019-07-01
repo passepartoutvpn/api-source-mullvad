@@ -12,17 +12,6 @@ ca = File.read("../static/ca.crt")
 
 cfg = {
     ca: ca,
-    ep: [
-        "UDP:1194",
-        "UDP:1195",
-        "UDP:1196",
-        "UDP:1197",
-        "UDP:1301",
-        "UDP:1302",
-        "UDP:53",
-        "TCP:443",
-        "TCP:80"
-    ],
     cipher: "AES-256-CBC",
     auth: "SHA1",
     frame: 0,
@@ -35,14 +24,43 @@ external = {
     hostname: "${id}.mullvad.net"
 }
 
+recommended_cfg = cfg.dup
+recommended_cfg["ep"] = [
+    "UDP:1194",
+    "UDP:1195",
+    "UDP:1196",
+    "UDP:1197",
+    "UDP:1301",
+    "UDP:1302",
+    "UDP:53",
+    "TCP:443",
+    "TCP:80"
+]
 recommended = {
     id: "default",
     name: "Default",
     comment: "256-bit encryption",
-    cfg: cfg,
+    cfg: recommended_cfg,
     external: external
 }
-presets = [recommended]
+
+dns_override_cfg = cfg.dup
+dns_override_cfg["ep"] = [
+    "UDP:1400",
+    "TCP:1401"
+]
+dns_override = {
+    id: "dns",
+    name: "Custom DNS",
+    comment: "256-bit encryption",
+    cfg: dns_override_cfg,
+    external: external
+}
+
+presets = [
+    recommended,
+    dns_override
+]
 
 defaults = {
     :username => "1234567890",
