@@ -33,7 +33,7 @@ grep -A$LINES $CA_BEGIN $SAMPLE_CFG | grep -B$LINES $CA_END | egrep -v "$CA_BEGI
 
 rm -f $SERVERS_DST
 for CFG in `cd $TMP && ls *.ovpn`; do
-    ID=`echo $CFG | sed -E "s/^mullvad_([a-z\-]+)\.ovpn$/\1/"`
+    ID=`echo $CFG | sed -E "s/^mullvad_([A-Za-z\-]+)\.ovpn$/\1/"`
     ID_COMPS=(${ID//-/ })
     COUNTRY=${ID_COMPS[0]}
     AREA=${ID_COMPS[1]}

@@ -78,6 +78,10 @@ servers.with_index { |line, n|
     #udp = udp_joined.split("-")
     #tcp = tcp_joined.split("-")
 
+    # XXX: fix country case (AE)
+    id.downcase!
+    hostname.downcase!
+
     addresses = nil
     if ARGV.include? "noresolv"
         addresses = []
