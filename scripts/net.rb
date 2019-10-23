@@ -81,6 +81,7 @@ json["countries"].each { |country|
         city["relays"].each { |relay|
             id = relay["hostname"]
             hostname = "#{id.downcase}.mullvad.net"
+            num = id.split("-").last.to_i
 
             addresses = [relay["ipv4_addr_in"]]
             addresses.map! { |a|
@@ -94,6 +95,7 @@ json["countries"].each { |country|
                 :addrs => addresses
             }
             pool[:area] = area if !area.empty?
+            pool[:num] = num
             pools << pool
         }
     }
