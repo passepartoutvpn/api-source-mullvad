@@ -7,7 +7,7 @@ Dir.chdir(cwd)
 
 ###
 
-servers = File.foreach("../template/servers.csv")
+servers = File.read("../template/servers.json")
 ca = File.read("../static/ca.crt")
 
 cfg = {
@@ -71,35 +71,32 @@ defaults = {
 ###
 
 pools = []
-servers.with_index { |line, n|
-    id, country, area, hostname, udp_joined, tcp_joined = line.strip.split(",")
 
-    # XXX: can't use per-server ports, endpoints must be shared
-    #udp = udp_joined.split("-")
-    #tcp = tcp_joined.split("-")
+json = JSON.parse(servers)
+json["countries"].each { |country|
+    country["cities"].each { |city|
+        code = country["code"].upcase
+        area = city["name"]
 
-    # XXX: fix country case (AE)
-    id.downcase!
-    hostname.downcase!
+        city["relays"].each { |relay|
+            id = relay["hostname"]
+            hostname = "#{id.downcase}.mullvad.net"
 
-    addresses = nil
-    if ARGV.include? "noresolv"
-        addresses = []
-    else
-        addresses = Resolv.getaddresses(hostname)
-    end
-    addresses.map! { |a|
-        IPAddr.new(a).to_i
+            addresses = [relay["ipv4_addr_in"]]
+            addresses.map! { |a|
+                IPAddr.new(a).to_i
+            }
+
+            pool = {
+                :id => id,
+                :country => code,
+                :hostname => hostname,
+                :addrs => addresses
+            }
+            pool[:area] = area if !area.empty?
+            pools << pool
+        }
     }
-
-    pool = {
-        :id => id,
-        :country => country.upcase,
-        :hostname => hostname,
-        :addrs => addresses
-    }
-    pool[:area] = area if !area.empty?
-    pools << pool
 }
 
 ###
