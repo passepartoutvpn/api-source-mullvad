@@ -1,12 +1,3 @@
-Mullvad infrastructure is built upon the following archive:
+Mullvad has an infrastructure API:
 
-https://mullvad.net/en/download/config/
-
-With the following form:
-
-    platform:ios (is this relevant?)
-    region:all
-    port:0
-    use_ip:no
-
-Unfortunately, non-interactive download is not permitted (cookies).
+https://api.mullvad.net/public/relays/v1/
