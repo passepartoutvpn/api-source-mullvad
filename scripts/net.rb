@@ -13,10 +13,8 @@ ca = File.read("../static/ca.crt")
 cfg = {
     ca: ca,
     cipher: "AES-256-CBC",
-    auth: "SHA1",
-    frame: 0,
     ping: 10,
-    reneg: 3600,
+    reneg: 0,
     eku: true
 }
 
