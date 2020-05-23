@@ -16,6 +16,7 @@ cfg = {
     auth: "SHA1",
     frame: 0,
     ping: 10,
+    pingTimeout: 60,
     reneg: 0,
     eku: true
 }
